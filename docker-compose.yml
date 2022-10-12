@@ -8,17 +8,14 @@ services:
         - '${APP_PORT_SSL}:443'
         volumes:
         - 'data:/var/www/'
-        - type: bind
-          source: ./public_html/${PROJECT_FOLDER}
-          target: /var/www/html/
-          bind:
-            propagation: shared
+        - './public_html:/var/www/html:rshared'
         - './docker/nginx/conf/:/etc/nginx/conf.d/'
         - './docker/nginx/ssl/:/etc/nginx/certs/'
 networks:
   default:
-    external:
-      name: phpbackend
+    name: phpbackend
+    external: true
 volumes:
   data:
     name: public_html
+    external: true
